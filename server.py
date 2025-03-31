@@ -14,7 +14,7 @@ import asyncio
 
 from mcp.server.fastmcp import Context, FastMCP
 
-mcp = FastMCP("Mcp Jenkins Server")
+mcp = FastMCP("Mcp Jenkins Server", log_level="ERROR")
 
 
 @dataclass
@@ -42,7 +42,7 @@ async def app_lifespan(server: FastMCP):
     finally:
         pass
 
-mcp = FastMCP("Mcp Jenkins Server", lifespan=app_lifespan)
+mcp = FastMCP("Mcp Jenkins Server", lifespan=app_lifespan, log_level="ERROR")
 
 
 @mcp.tool()
@@ -95,3 +95,7 @@ def trriger_llm_demo_job_build(ctx: Context, user: str):
         'user': user
     }
     return client.build_job('LLM_Demo', parameters=parameters)
+
+
+if __name__ == "__main__":
+    mcp.run()
